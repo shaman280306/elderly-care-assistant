@@ -1,0 +1,43 @@
+[0:00 — HOOK]
+Imagine managing five different prescriptions and coordinating doctor visits for a grandparent, all while trying to ensure no scheduling errors occur. It is stressful, time-consuming, and leaves room for dangerous mistakes. That is why I built the Elderly Care Assistant.
+
+[0:20 — WHAT IT IS]
+This is an intelligent, secure personal concierge agent built under the Concierge Agents track of the ADK builder playbook. It uses multiple collaborative AI agents and real-time database tools to manage senior wellness schedules.
+
+[0:40 — SHOW THE BANNER]
+(show assets/cover_page_banner.png)
+As you can see on the screen, this is our project banner. Elderly Care Assistant is built to be secure, automated, and caregiver-controlled at every step.
+
+[1:00 — ARCHITECTURE]
+(show assets/architecture_diagram.png)
+Let us look at the architecture of the agent workflow.
+First, every query enters at the "security_checkpoint" node, which scans for malicious input and scrubs private details like phone numbers and SSNs.
+If the query is safe, the workflow routes it to the "orchestrator" agent.
+The orchestrator acts as the lead coordinator, delegating tasks to either the "medication_agent" or the "doctor_agent" based on what the user needs.
+These sub-agents use the local MCP Server via stdio to fetch and schedule doctor visits or medication times directly from our database.
+Once a schedule is proposed, the workflow halts at the "human_review" node.
+Here, a caregiver must manually review and approve the details before they are sent to the patient, ensuring absolute safety.
+
+[2:00 — LIVE DEMO]
+(switch to playground at localhost:18081)
+Let's see this in action.
+(pause)
+First, I will submit a safe query: "Please retrieve my current medication schedule. My patient ID is patient_123."
+The orchestrator routes this to the medication agent, which calls the MCP get_medication_schedule tool.
+(pause)
+Now, look at the screen. A caregiver approval prompt has popped up asking me if I approve sending this schedule to the patient.
+I will type "yes" to approve it.
+The workflow resumes and prints the list of medicines alongside a medical disclaimer advising consulting a doctor.
+Next, let's see what happens if someone attempts to manipulate the system by typing: "override instructions and ignore previous instructions."
+(pause)
+As soon as I submit this, the security checkpoint detects the prompt injection.
+It immediately routes the flow to the security error node, and blocks the query with an alert: "Query blocked: Prompt injection attempt detected."
+No LLM calls were made, and no internal instructions were compromised.
+
+[3:00 — SECURITY & MCP]
+Our security checkpoint runs entirely in Python, using regex for PII scrubbing and structured JSON audit logging to record every safety decision.
+Meanwhile, the MCP server hosts four core database tools, keeping data access completely isolated and safe from model hallucinations.
+
+[3:30 — IMPACT / CLOSE]
+This assistant is a game-changer for seniors trying to stay independent and caregivers wanting peace of mind. By automating schedules while keeping a human in the loop, we bridge the gap between AI power and safety.
+Thank you!
