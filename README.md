@@ -169,7 +169,7 @@ graph TD
 ## Assets
 
 ### Project Cover Banner
-![Project Cover Banner](file:///c:/Users/SHAMAN/Desktop/adk-workspace/elderly-care-assistant/assets/cover_page_banner.png)
+![Project Cover Banner](assets/cover_page_banner.png)
 
 ### Agent Workflow Architecture
-![Agent Workflow Architecture](file:///c:/Users/SHAMAN/Desktop/adk-workspace/elderly-care-assistant/assets/architecture_diagram.png)
+![Agent Workflow Architecture](assets/architecture_diagram.png)
